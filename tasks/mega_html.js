@@ -8,43 +8,32 @@
 
 'use strict';
 
-module.exports = function(grunt) {
+(function () {
+    var ngView = require("./lib/ng_view"),
+        ngInclude = require("./lib/ng_include"),
+        path = require('path');
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+    module.exports = function(grunt) {
 
-  grunt.registerMultiTask('mega_html', 'A plugin for merging all the ng-includes and ng-views into one file.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
+        // Please see the Grunt documentation for more information regarding task
+        // creation: http://gruntjs.com/creating-tasks
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
+        grunt.registerMultiTask('mega_html', 'A plugin for merging all the ng-includes and ng-views into one file.', function() {
+            var baseHtml = grunt.file.read(path.resolve(this.data.src));
 
-      // Handle options.
-      src += options.punctuation;
+            //ngView
+            baseHtml = ngView(baseHtml, grunt.file.read(this.data.ngView));
 
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
+            //ngInclude
+            baseHtml = ngInclude(grunt, this.options.basePath, baseHtml);
 
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
-  });
+            //Write file
+            var resolvedDestination = path.resolve(this.data.dest);
+            grunt.file.write(resolvedDestination, baseHtml);
+            grunt.log.writeln('New file created at: ' + resolvedDestination);
+        });
 
-};
+    };
+})();
+
+

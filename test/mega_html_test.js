@@ -1,48 +1,65 @@
-    'use strict';
+'use strict';
 
-var grunt = require('grunt');
+var grunt = require('grunt'),
+    expect = require("expect.js"),
+    sinon = require('sinon'),
+    path = require('path'),
+    exec = require('child_process').exec;
 
-/*
-  ======== A Handy Little Nodeunit Reference ========
-  https://github.com/caolan/nodeunit
+describe("grunt mega_html task", function () {
 
-  Test methods:
-    test.expect(numAssertions)
-    test.done()
-  Test assertions:
-    test.ok(value, [message])
-    test.equal(actual, expected, [message])
-    test.notEqual(actual, expected, [message])
-    test.deepEqual(actual, expected, [message])
-    test.notDeepEqual(actual, expected, [message])
-    test.strictEqual(actual, expected, [message])
-    test.notStrictEqual(actual, expected, [message])
-    test.throws(block, [error], [message])
-    test.doesNotThrow(block, [error], [message])
-    test.ifError(value)
-*/
+    beforeEach(function () {
+        sinon.stub(path, 'resolve').returns("resolved/path");
+        sinon.stub(grunt.file, 'read', function (val) {
+            return {
+                'my/index.html': '<html></html>',
+                'some/path/form.html': '<form></form>'
+            }[val];
+        });
+        sinon.spy(grunt.file, 'write');
+        sinon.spy(grunt.log, 'writeln');
+        grunt.initConfig('mega_html', {
+            dist: {
+                options: {
+                    basePath: 'some/base'
+                },
+                ngView: 'some/path/form.html',
+                src: 'my/index.html',
+                dest: 'dist/index.html'
+            }
+        });
+    });
 
-exports.mega_html = {
-  setUp: function(done) {
-    // setup here if necessary
-    done();
-  },
-  default_options: function(test) {
-    test.expect(1);
+    afterEach(function () {
+        path.resolve.restore();
+        grunt.file.read.restore();
+        grunt.file.write.restore();
+        grunt.log.writeln.restore();
+    });
 
-    var actual = grunt.file.read('tmp/default_options');
-    var expected = grunt.file.read('test/expected/default_options');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
+    it("Should run the task with the expected goodness", function () {
+        exec('grunt mega_html', function () {
+            expect(grunt.file.read.calledTwice).to.be(true);
+            expect(grunt.file.write.calledOnce).to.be(true);
+            expect(grunt.log.writeln.calledOnce).to.be(true);
+        });
+    });
 
-    test.done();
-  },
-  custom_options: function(test) {
-    test.expect(1);
+    it("Should run the specific task if necessary", function () {
+        exec('grunt mega_html:dist', function () {
+            expect(grunt.file.read.calledTwice).to.be(true);
+            expect(grunt.file.write.calledOnce).to.be(true);
+            expect(grunt.log.writeln.calledOnce).to.be(true);
+        });
+    });
 
-    var actual = grunt.file.read('tmp/custom_options');
-    var expected = grunt.file.read('test/expected/custom_options');
-    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+    it("Should be fine without a basePath", function () {
+        grunt.config('mega_html.options.basePath', undefined);
+        exec('grunt mega_html', function () {
+            expect(grunt.file.read.calledTwice).to.be(true);
+            expect(grunt.file.write.calledOnce).to.be(true);
+            expect(grunt.log.writeln.calledOnce).to.be(true);
+        });
+    });
 
-    test.done();
-  },
-};
+});
