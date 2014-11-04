@@ -25,7 +25,7 @@
             baseHtml = ngView(baseHtml, grunt.file.read(this.data.ngView));
 
             //ngInclude
-            baseHtml = ngInclude(grunt, this.options.basePath, baseHtml);
+            baseHtml = ngInclude(grunt, this.options().basePath, baseHtml);
 
             //Write file
             var resolvedDestination = path.resolve(this.data.dest);
