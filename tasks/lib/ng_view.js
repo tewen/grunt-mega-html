@@ -11,7 +11,7 @@
 
         //Elements or attributes replaced
         $('ng-view').replaceWith(replaceHtml);
-        $("[ng-view='']").replaceWith(replaceHtml);
+        $("[ng-view]").replaceWith(replaceHtml);
 
         return $.html();
     };
