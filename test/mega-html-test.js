@@ -6,7 +6,7 @@ var grunt = require('grunt'),
     path = require('path'),
     exec = require('child_process').exec;
 
-describe("grunt mega_html task", function () {
+describe("grunt megaHtml task", function () {
 
     beforeEach(function () {
         sinon.stub(path, 'resolve').returns("resolved/path");
@@ -18,7 +18,7 @@ describe("grunt mega_html task", function () {
         });
         sinon.spy(grunt.file, 'write');
         sinon.spy(grunt.log, 'writeln');
-        grunt.initConfig('mega_html', {
+        grunt.initConfig('megaHtml', {
             dist: {
                 options: {
                     basePath: 'some/base'
@@ -38,7 +38,7 @@ describe("grunt mega_html task", function () {
     });
 
     it("Should run the task with the expected goodness", function () {
-        exec('grunt mega_html', function () {
+        exec('grunt megaHtml', function () {
             expect(grunt.file.read.calledTwice).to.be(true);
             expect(grunt.file.write.calledOnce).to.be(true);
             expect(grunt.log.writeln.calledOnce).to.be(true);
@@ -46,7 +46,7 @@ describe("grunt mega_html task", function () {
     });
 
     it("Should run the specific task if necessary", function () {
-        exec('grunt mega_html:dist', function () {
+        exec('grunt megaHtml:dist', function () {
             expect(grunt.file.read.calledTwice).to.be(true);
             expect(grunt.file.write.calledOnce).to.be(true);
             expect(grunt.log.writeln.calledOnce).to.be(true);
@@ -54,8 +54,8 @@ describe("grunt mega_html task", function () {
     });
 
     it("Should be fine without a basePath", function () {
-        grunt.config('mega_html.options.basePath', undefined);
-        exec('grunt mega_html', function () {
+        grunt.config('megaHtml.options.basePath', undefined);
+        exec('grunt megaHtml', function () {
             expect(grunt.file.read.calledTwice).to.be(true);
             expect(grunt.file.write.calledOnce).to.be(true);
             expect(grunt.log.writeln.calledOnce).to.be(true);

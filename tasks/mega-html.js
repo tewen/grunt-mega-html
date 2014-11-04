@@ -9,8 +9,8 @@
 'use strict';
 
 (function () {
-    var ngView = require("./lib/ng_view"),
-        ngInclude = require("./lib/ng_include"),
+    var ngView = require("./lib/ng-view"),
+        ngInclude = require("./lib/ng-include"),
         path = require('path');
 
     module.exports = function(grunt) {
@@ -18,7 +18,7 @@
         // Please see the Grunt documentation for more information regarding task
         // creation: http://gruntjs.com/creating-tasks
 
-        grunt.registerMultiTask('mega_html', 'A plugin for merging all the ng-includes and ng-views into one file.', function() {
+        grunt.registerMultiTask('megaHtml', 'A plugin for merging all the ng-includes and ng-views into one file.', function() {
             var baseHtml = grunt.file.read(path.resolve(this.data.src));
 
             //ngView

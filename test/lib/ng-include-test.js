@@ -3,7 +3,7 @@
 var grunt = require('grunt'),
     expect = require("expect.js"),
     sinon = require('sinon'),
-    ngInclude = require('../../tasks/lib/ng_include');
+    ngInclude = require('../../tasks/lib/ng-include');
 
 describe("ng_include helper library", function () {
     var mockGrunt, fragment;

@@ -2,9 +2,9 @@
 
 var grunt = require('grunt'),
     expect = require("expect.js"),
-    ngView = require('../../tasks/lib/ng_view');
+    ngView = require('../../tasks/lib/ng-view');
 
-describe("ng_view helper library", function () {
+describe("ng-view helper library", function () {
     var myHtml, replacement;
 
     beforeEach(function () {

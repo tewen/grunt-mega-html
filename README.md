@@ -17,14 +17,14 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 grunt.loadNpmTasks('grunt-mega-html');
 ```
 
-## The "mega_html" task
+## The "megaHtml" task
 
 ### Overview
-In your project's Gruntfile, add a section named `mega_html` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `mmegaHtml to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  mega_html: {
+  memegaHtml{
     options: {
       // Task-specific options go here.
     },
@@ -56,7 +56,7 @@ In this example, the default options are used to do something with whatever. So 
 
 ```js
 grunt.initConfig({
-  mega_html: {
+  megmegaHtml
     options: {},
     files: {
       'dest/default_options': ['src/testing', 'src/123'],

@@ -29,7 +29,7 @@ module.exports = function (grunt) {
         },
 
         // Configuration to be run (and then tested).
-        mega_html: {
+        megaHtml: {
             default_options: {
                 options: {
                 },
@@ -60,7 +60,7 @@ module.exports = function (grunt) {
                     reporter: 'spec'
                 }
             },
-            src: ['test/**/*_test.js']
+            src: ['test/**/*-test.js']
         }
     });
 
@@ -73,7 +73,7 @@ module.exports = function (grunt) {
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['clean', 'mega_html', 'nodeunit']);
+    grunt.registerTask('test', ['clean', 'megaHtml', 'nodeunit']);
 
     // By default, lint and run all tests.
     grunt.registerTask('default', ['jshint', 'test']);
