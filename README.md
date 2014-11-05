@@ -26,9 +26,9 @@ This was made for the very simple idea that some basic, single page angular apps
 
 #### Do not use this plugin if
 
-* Your project is not a single page application.
-* Your ng-include sources are variables, not strings in the dom (myTempate vs. 'my/template.html')
-* You don't need to.
+* Your project is <b>not</b> a single page application.
+* Your ng-include sources are variables, not strings in the DOM (myTempate vs. 'my/template.html')
+* You have no good reason to do so.
 
 In your project's Gruntfile, add a section named `megaHtml to the data object passed into `grunt.initConfig()`.
 
